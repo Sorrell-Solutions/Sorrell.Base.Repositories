@@ -58,7 +58,7 @@ Create a property for each repository with a public getter and private setter:
 Create a constructor that takes your DbContext class as a parameter. The constructor also initializes each of the repositories.
 
 ```
-public UnitOfWork(SampleDatabaseModel context)
+public UnitOfWork(YourDbContext context)
     : base(context)
 {
     Orders = new OrderRepository(context);
@@ -92,7 +92,7 @@ Essentially, you will use the interfaces and classes to abstract away Entity Fra
 
 ```
 // Or use dependency injection to remove the reference to the EF DbContext object
-using (IUnitOfWork u = new UnitOfWork(new SampleDatabaseModel())
+using (IUnitOfWork u = new UnitOfWork(new YourDbContext())
 {
     // query, update, etc.
     
