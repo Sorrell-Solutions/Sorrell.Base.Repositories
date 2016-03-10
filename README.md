@@ -13,7 +13,7 @@ The quickest way to get the required libraries in your data layer is to use the 
 
 After adding the NuGet package to your project, you will need to:
 
-1. Create a repository interface for each of your strong entities, especially if you want. This repository interface should inherit from the generic `IRepository<TEntity, TId>` interface.
+1. Create a repository interface for each of your strong entities. These interfaces will define the repository methods specific to that entity. Generic methods, like `Get` and `GetAll` are defined in the base interface. This repository interface inherits from the generic `IRepository<TEntity, TId>` interface.
 2. Create a repository class for each of your strong entities. This repository class should inherit from the generic `EFRepository<TEntity, TId>` class and implement the repository interface you created in step 1.
 
 Details below.
@@ -86,8 +86,22 @@ Correctly implement IDisposable. Note: the DbContext instance is disposed in the
 #endregion
 ```
 
+###Using the Repositories and Unit of Work in Your Code
+
+Essentially, you will use the interfaces and classes to abstract away Entity Framework. Where you would ordinarily use a DbContext object, you will now use a UnitOfWork object:
+
+```
+// Or use dependency injection to remove the reference to the EF DbContext object
+using (IUnitOfWork u = new UnitOfWork(new SampleDatabaseModel())
+{
+    // query, update, etc.
+    
+    u.Complete(); // Persist updates
+}
+```
+
 ##Future
 
 I would like to improve the project by
-- Adding T4 templates to generate the Repository interfaces and classes.
+- Adding T4 templates to generate the Repository interfaces and classes based on an Entity Framework DbContext class.
 - Adding Unity Dependency Injection (DI) to the sample project.
