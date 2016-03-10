@@ -20,11 +20,39 @@ Details below.
 
 ####Creating Repository Interfaces
 
-Pending
+```
+public interface IOrderRepository : IRepository<Order, int>
+```
+
+`TEntity` is your domain object type. `TId` is the type of the primary key field. Special use case is a type with a compound primary key (and not a weak entity).
+
+You define a method in the interface for each operation you want the repository to perform that's not already included in the base interface, for example, you could define a method `GetTopOrders(int top)` like this:
+
+```
+IEnumerable<Order> GetTopOrders(int top);
+```
 
 ####Creating Repository Classes
 
-Pending
+```
+public class OrderRepository : EFRepository<Order, int>, IOrderRepository
+```
+
+For ease of use, you'll want to create a private property that will cast the base class' `Context` property back to the specific type of your EF DbContext:
+
+```
+private YourDbContext MyContext { get { return Context as YourDbContext; } }
+```
+
+You will need to provide implementations for each of the methods you defined in the interface:
+
+```
+public IEnumerable<Order> GetTopOrders(int top)
+{
+    // code here
+    // use the MyContext property to get access to the Entity Framework's DbContext
+}
+```
 
 ###Getting Started with the Unit of Work Pattern
 
