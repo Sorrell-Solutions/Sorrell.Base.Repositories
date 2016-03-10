@@ -5,7 +5,7 @@ It's highly recommended to view Mosh Hamedani's presentation on the implementati
 
 ##Getting Started
 
-I recommend looking at the included sample project `Repositories.Test` (yes, poor name, it will change to `Repositories.Sample` soon).
+I recommend looking at the included sample project `Repositories.Sample` for a basic example of how to create the repository and unit of work classes and use them.
 
 The quickest way to get the required libraries in your data layer is to use the NuGet package.
 
